@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080610">
+  <meta name="description" content="GLITCH ARCADE 2099 — an immersive 3D cyberpunk experience by Nivedita Thanapati for Techfest.">
+  <title>GLITCH ARCADE 2099 — Nivedita Thanapati</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <div class="boot-screen" id="bootScreen" aria-live="polite">
+    <div class="boot-logo">G<span>_</span>A</div>
+    <div class="boot-label">INITIALIZING THE ARCADE</div>
+    <div class="boot-track"><span id="bootProgress"></span></div>
+    <div class="boot-status" id="bootStatus">LOADING GRAPHICS ENGINE...</div>
+  </div>
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a href="#home" class="brand" aria-label="Glitch Arcade home">
+      <span class="brand-symbol">G<span>/</span>A</span>
+      <span class="brand-copy">
+        <strong>GLITCH ARCADE</strong>
+        <small>EXPERIMENTAL DIVISION · 2099</small>
+      </span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="#mission">MISSION <span>01</span></a>
+      <a href="#lab">3D LAB <span>02</span></a>
+      <a href="#projects">PROJECTS <span>03</span></a>
+      <a href="#specs">SPECS <span>04</span></a>
+    </nav>
+
+    <a href="#submission" class="header-cta">ENTER THE GRID <span>↗</span></a>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero section-shell" id="home">
+      <div class="hero-topline">
+        <span><i class="status-dot"></i> SYSTEM ONLINE</span>
+        <span>SECTOR 09 / EARTH-2099</span>
+        <span class="hero-coordinates">28°33' N · 77°16' E</span>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> THE FUTURE IS INTERACTIVE</div>
+
+          <h1 class="hero-title glitch-title" data-text="GLITCH ARCADE">
+            GLITCH <span>ARCADE</span>
+          </h1>
+
+          <div class="hero-edition">
+            <span class="edition-mark">2099</span>
+            <span class="edition-line"></span>
+            <span>REALITY.EXE HAS STARTED</span>
+          </div>
+
+          <p class="hero-description">
+            A digital playground where <strong>imagination breaks the
+            simulation.</strong> Step inside a neon-soaked universe built
+            with immersive 3D, reactive motion, and the beautiful chaos
+            of the future.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#lab" class="button button-primary magnetic">
+              <span>EXPLORE THE UNIVERSE</span><b>↗</b>
+            </a>
+            <a href="#mission" class="button button-ghost">
+              <span class="play-icon">▶</span> READ THE MISSION
+            </a>
+          </div>
+
+          <div class="hero-microstats">
+            <div><strong>03</strong><span>DIMENSIONS</span></div>
+            <div><strong>∞</strong><span>POSSIBILITIES</span></div>
+            <div><strong>01</strong><span>NEW REALITY</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual" id="heroVisual">
+          <div class="visual-ring visual-ring-one"></div>
+          <div class="visual-ring visual-ring-two"></div>
+          <div class="visual-ring visual-ring-three"></div>
+          <div class="visual-corner corner-tl"></div>
+          <div class="visual-corner corner-br"></div>
+
+          <div class="visual-label visual-label-top">
+            <span>OBJECT_001</span><span>LIVE RENDER</span>
+          </div>
+
+          <div id="hero3d" class="hero-canvas" aria-label="Interactive three-dimensional neon object">
+            <div class="canvas-fallback" aria-hidden="true">
+              <div class="fallback-core"></div>
+            </div>
+          </div>
+
+          <div class="visual-crosshair">+</div>
+          <div class="visual-label visual-label-bottom">
+            <span>NEURAL OBJECT / ACTIVE</span><span>60 FPS TARGET</span>
+          </div>
+
+          <div class="floating-chip chip-top">
+            <span class="chip-dot"></span> WEBGL ENGINE
+          </div>
+          <div class="floating-chip chip-bottom">
+            <span>✳</span> LIVE INTERACTION
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-bottomline">
+        <span>SCROLL TO EXPLORE <span class="scroll-arrow">↓</span></span>
+        <span class="hero-ticker">NO RULES. NO LIMITS. JUST CREATION.</span>
+        <span>EST. IN THE FUTURE <b>✳</b></span>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-band" aria-label="Creative principles">
+      <div class="marquee-track">
+        <span>BREAK THE GRID <b>✳</b> BUILD THE FUTURE <b>✳</b> DEFY REALITY <b>✳</b> CODE THE IMPOSSIBLE <b>✳</b> BREAK THE GRID <b>✳</b> BUILD THE FUTURE <b>✳</b> DEFY REALITY <b>✳</b> CODE THE IMPOSSIBLE <b>✳</b>
+        </span>
+      </div>
+    </div>
+
+    <!-- MISSION -->
+    <section class="mission section-shell section-pad" id="mission">
+      <div class="section-index">
+        <span>01 / MISSION BRIEFING</span>
+        <span class="index-decoration">[ CLASSIFIED FILE ]</span>
+      </div>
+
+      <div class="mission-grid">
+        <div class="mission-heading reveal">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR REALITY, RECODED</div>
+          <h2>THE OLD WEB<br>IS <span class="text-outline">FLAT.</span><br>WE ARE NOT.</h2>
+          <div class="heading-decoration">ERR_404: ORDINARY NOT FOUND</div>
+        </div>
+
+        <div class="mission-copy reveal">
+          <div class="file-tag"><span>MISSION LOG #001</span><span>PRIORITY: HIGH</span></div>
+          <p class="large-copy">
+            What if a website wasn't just something you looked at —
+            but somewhere you could <em>actually feel?</em>
+          </p>
+          <p class="body-copy">
+            GLITCH ARCADE 2099 transforms the browser into a living digital
+            environment. Explore spatial interfaces, react to responsive
+            objects, discover hidden details, and experience the web as an
+            interactive dimension instead of a static page.
+          </p>
+          <p class="body-copy">
+            Created by <strong>Nivedita Thanapati</strong> for the Techfest
+            3D website challenge, this concept combines experimental visual
+            design, real-time WebGL rendering, and deliberate interaction
+            design into one cohesive experience.
+          </p>
+          <a href="#specs" class="text-link">DECODE THE PROJECT <span>→</span></a>
+        </div>
+      </div>
+
+      <div class="mission-cards">
+        <article class="mission-card reveal">
+          <span class="card-number">01 / VISUALS</span>
+          <div class="card-icon">◈</div>
+          <h3>VISUAL ANARCHY</h3>
+          <p>High-contrast neon, digital noise, layered compositions, and purposeful glitch effects.</p>
+          <span class="card-foot">STATUS: ACTIVE</span>
+        </article>
+        <article class="mission-card mission-card-featured reveal">
+          <span class="card-number">02 / DIMENSION</span>
+          <div class="card-icon">◎</div>
+          <h3>SPATIAL WEB</h3>
+          <p>Real 3D geometry, responsive camera movement, ambient particles, and dynamic lighting.</p>
+          <span class="card-foot">STATUS: RENDERING</span>
+        </article>
+        <article class="mission-card reveal">
+          <span class="card-number">03 / EXPERIENCE</span>
+          <div class="card-icon">⌁</div>
+          <h3>HUMAN + MACHINE</h3>
+          <p>Thoughtful navigation, tactile feedback, accessible controls, and meaningful microinteractions.</p>
+          <span class="card-foot">STATUS: SYNCHRONIZED</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3D LAB -->
+    <section class="lab section-shell section-pad" id="lab">
+      <div class="section-index">
+        <span>02 / EXPERIMENTAL LAB</span>
+        <span>INTERACTIVE OBJECT PROTOCOL</span>
+      </div>
+
+      <div class="lab-heading reveal">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> TOUCH THE IMPOSSIBLE</div>
+          <h2>ENTER THE<br><span class="text-gradient">THIRD DIMENSION.</span></h2>
+        </div>
+        <p>Move your cursor. Change the energy. Explore a live 3D object rendered right here in your browser.</p>
+      </div>
+
+      <div class="lab-interface reveal">
+        <div class="lab-toolbar">
+          <span><i class="status-dot"></i> RENDER INSTANCE 001</span>
+          <span id="renderMode">MODE: CHROME</span>
+          <span id="fpsCounter">WEBGL / LIVE</span>
+        </div>
+
+        <div class="lab-stage" id="labStage">
+          <div class="lab-grid-floor"></div>
+          <div class="lab-stage-glow"></div>
+          <div id="lab3d" class="lab-canvas" aria-label="Interactive 3D object lab">
+            <div class="lab-fallback-shape"></div>
+          </div>
+
+          <div class="stage-coordinate coordinate-left">X: <span id="coordX">000</span><br>Y: <span id="coordY">000</span></div>
+          <div class="stage-coordinate coordinate-right">Z-DEPTH: 3D<br>LIGHT: DYNAMIC</div>
+          <div class="stage-hint"><span>↖</span> MOVE TO INTERACT</div>
+
+          <div class="lab-center-tag">OBJECT_001</div>
+        </div>
+
+        <div class="lab-controls">
+          <div class="control-group">
+            <label for="energyControl">ENERGY LEVEL <span id="energyValue">65%</span></label>
+            <input id="energyControl" type="range" min="10" max="100" value="65">
+          </div>
+          <div class="control-group">
+            <label>CHROMATIC MODE</label>
+            <div class="color-switches">
+              <button class="color-switch active" data-color="pink" aria-label="Pink energy mode" title="Pink"></button>
+              <button class="color-switch" data-color="cyan" aria-label="Cyan energy mode" title="Cyan"></button>
+              <button class="color-switch" data-color="gold" aria-label="Gold energy mode" title="Gold"></button>
+              <button class="color-switch" data-color="green" aria-label="Green energy mode" title="Green"></button>
+            </div>
+          </div>
+          <div class="control-group control-action">
+            <label>OBJECT PROTOCOL</label>
+            <button id="spinToggle" class="small-action">PAUSE ROTATION <span>Ⅱ</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-caption">
+        <span>FIG. 001 — PROCEDURAL CHROME GEOMETRY</span>
+        <span>BUILT WITH THREE.JS / WEBGL</span>
+      </div>
+    </section>
+
+    <!-- INTERACTION MANIFESTO -->
+    <section class="manifesto section-shell">
+      <div class="manifesto-backdrop">CREATE</div>
+      <div class="manifesto-inner reveal">
+        <div class="eyebrow"><span class="eyebrow-line"></span> THE ARCADE MANIFESTO</div>
+        <h2>DON'T JUST<br><span>SCROLL.</span><br>EXPERIENCE.</h2>
+        <p>Every pixel is a possibility. Every interaction is an invitation. Every experiment is a step beyond the expected.</p>
+        <a href="#projects" class="button button-primary">DISCOVER THE SYSTEMS <b>↗</b></a>
+      </div>
+      <div class="manifesto-side">REALITY IS A RENDERING CHOICE — 2099</div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects section-shell section-pad" id="projects">
+      <div class="section-index">
+        <span>03 / EXPERIMENTAL ARCHIVE</span>
+        <span>SELECT A MODULE TO INSPECT</span>
+      </div>
+
+      <div class="projects-heading reveal">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> DIGITAL ARTIFACTS</div>
+          <h2>BUILT TO<br><span class="text-outline">BREAK LIMITS.</span></h2>
+        </div>
+        <p>Three conceptual systems. One mission: turn ordinary browsing into a memorable digital encounter.</p>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card project-wide reveal" data-project="01">
+          <div class="project-art art-orbit">
+            <div class="orbit orbit-a"></div>
+            <div class="orbit orbit-b"></div>
+            <div class="orbit-core"></div>
+            <span class="art-code">SYS_001</span>
+            <span class="art-coordinate">SPATIAL / 3D</span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta"><span>MODULE 01</span><span>01 / 03</span></div>
+            <h3>ORBITAL REALITY</h3>
+            <p>A spatial experiment exploring depth, metallic surfaces, ambient light, and movement-driven interactions.</p>
+            <button class="project-link" data-detail="orbit">INSPECT MODULE <span>↗</span></button>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-project="02">
+          <div class="project-art art-glitch">
+            <div class="glitch-block block-one"></div>
+            <div class="glitch-block block-two"></div>
+            <div class="glitch-block block-three"></div>
+            <div class="glitch-typography">ERR<br><span>404</span></div>
+            <span class="art-code">SYS_002</span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta"><span>MODULE 02</span><span>02 / 03</span></div>
+            <h3>GLITCH THEORY</h3>
+            <p>A visual language made from digital distortion, scanlines, contrast, and expressive motion.</p>
+            <button class="project-link" data-detail="glitch">INSPECT MODULE <span>↗</span></button>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-project="03">
+          <div class="project-art art-neural">
+            <div class="neural-node node-a"></div>
+            <div class="neural-node node-b"></div>
+            <div class="neural-node node-c"></div>
+            <div class="neural-node node-d"></div>
+            <div class="neural-node node-e"></div>
+            <svg class="neural-lines" viewBox="0 0 400 300" aria-hidden="true">
+              <path d="M70 70 L180 130 L320 65 M180 130 L100 230 M180 130 L320 220 M100 230 L320 220 M70 70 L100 230 M320 65 L320 220"/>
+            </svg>
+            <span class="art-code">SYS_003</span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta"><span>MODULE 03</span><span>03 / 03</span></div>
+            <h3>NEURAL NETWORK</h3>
+            <p>A metaphor for connected ideas, adaptive systems, and the relationships behind interactive experiences.</p>
+            <button class="project-link" data-detail="neural">INSPECT MODULE <span>↗</span></button>
+          </div>
+        </article>
+      </div>
+
+      <div class="archive-bottom">
+        <span>ARCHIVE COUNT: 003</span>
+        <span>MORE WORLDS WAIT TO BE BUILT <b>✳</b></span>
+      </div>
+    </section>
+
+    <!-- PROJECT DETAILS DIALOG -->
+    <dialog class="detail-dialog" id="detailDialog">
+      <div class="dialog-inner">
+        <div class="dialog-top">
+          <span class="eyebrow">MODULE INSPECTION</span>
+          <button id="closeDialog" class="dialog-close" aria-label="Close module details">✕</button>
+        </div>
+        <div class="dialog-index" id="dialogIndex">SYS_001</div>
+        <h2 id="dialogTitle">ORBITAL REALITY</h2>
+        <p id="dialogDescription"></p>
+        <div class="dialog-footer"><span>GLITCH ARCADE / 2099</span><span>INSPECTION COMPLETE</span></div>
+      </div>
+    </dialog>
+
+    <!-- SPECS -->
+    <section class="specs section-shell section-pad" id="specs">
+      <div class="section-index">
+        <span>04 / TECHNICAL DOSSIER</span>
+        <span>ENGINEERING DETAILS</span>
+      </div>
+
+      <div class="specs-layout">
+        <div class="specs-intro reveal">
+          <div class="eyebrow"><span class="eyebrow-line"></span> UNDER THE SURFACE</div>
+          <h2>DESIGNED<br>WITH INTENT.<br><span class="text-gradient">BUILT TO MOVE.</span></h2>
+          <p>This experience brings visual design and front-end engineering together. Every effect has a purpose, every interaction has feedback, and every section contributes to a unified story.</p>
+          <div class="specs-stamp">TECHFEST<br><strong>2099</strong><br>EXPERIMENTAL BUILD</div>
+        </div>
+
+        <div class="spec-list reveal">
+          <div class="spec-row">
+            <span class="spec-index">01</span>
+            <div><h3>REAL-TIME 3D</h3><p>Three.js, WebGL, procedural geometry, metallic materials, dynamic lighting, and responsive animation.</p></div>
+            <span class="spec-state">ACTIVE</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-index">02</span>
+            <div><h3>VISUAL SYSTEM</h3><p>CSS design tokens, neon contrast, pixel-inspired borders, layered gradients, scanlines, and glitch typography.</p></div>
+            <span class="spec-state">ACTIVE</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-index">03</span>
+            <div><h3>INTERACTION</h3><p>Mouse-responsive scenes, color controls, adjustable energy, rotation toggles, mobile navigation, and detail dialogs.</p></div>
+            <span class="spec-state">ACTIVE</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-index">04</span>
+            <div><h3>RESPONSIVE ENGINEERING</h3><p>Flexible layouts, touch-friendly controls, viewport-aware canvas resizing, and reduced-motion support.</p></div>
+            <span class="spec-state">ACTIVE</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-index">05</span>
+            <div><h3>PERFORMANCE</h3><p>Optimized geometry, capped pixel ratio, animation cleanup, and a graceful fallback if WebGL is unavailable.</p></div>
+            <span class="spec-state">OPTIMIZED</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-stack">
+        <span>HTML5</span><span>CSS3</span><span>JAVASCRIPT</span><span>THREE.JS</span><span>WEBGL</span><span>RESPONSIVE UI</span>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TERMINAL -->
+    <section class="terminal-section section-shell section-pad">
+      <div class="section-index">
+        <span>05 / SYSTEM TERMINAL</span>
+        <span>AUTHORIZED ACCESS: PUBLIC</span>
+      </div>
+
+      <div class="terminal-window reveal">
+        <div class="terminal-titlebar">
+          <div class="terminal-lights"><i></i><i></i><i></i></div>
+          <span>glitch@arcade:~</span>
+          <span>TTY-2099</span>
+        </div>
+        <div class="terminal-body" id="terminalBody" aria-live="polite">
+          <p><span class="terminal-prompt">guest@arcade:~$</span> system.status()</p>
+          <p class="terminal-output">[ OK ] GRAPHICS ENGINE INITIALIZED</p>
+          <p class="terminal-output">[ OK ] INTERACTION MODULES LOADED</p>
+          <p class="terminal-output">[ OK ] CREATIVE PROTOCOL ENABLED</p>
+          <p><span class="terminal-prompt">guest@arcade:~$</span> <span class="terminal-cursor">█</span></p>
+        </div>
+        <div class="terminal-commandbar">
+          <label for="terminalInput"><span>guest@arcade:~$</span></label>
+          <input id="terminalInput" type="text" placeholder="Type help and press Enter..." autocomplete="off" spellcheck="false">
+          <button id="terminalRun">RUN ↗</button>
+        </div>
+        <div class="terminal-help">AVAILABLE COMMANDS: HELP / STATUS / ABOUT / CLEAR / MATRIX</div>
+      </div>
+    </section>
+
+    <!-- SUBMISSION -->
+    <section class="submission section-shell section-pad" id="submission">
+      <div class="submission-frame reveal">
+        <div class="submission-scan"></div>
+        <div class="submission-content">
+          <div class="eyebrow"><span class="eyebrow-line"></span> FINAL TRANSMISSION</div>
+          <div class="submission-tag">READY FOR THE NEXT DIMENSION?</div>
+          <h2>THE FUTURE<br>IS <span class="text-gradient">UNRENDERED.</span></h2>
+          <p>One idea can become a world. One interaction can change the experience. This is only the beginning.</p>
+          <a href="#home" class="button button-primary"><span>RESTART THE EXPERIENCE</span><b>↑</b></a>
+        </div>
+        <div class="submission-orbit submission-orbit-a"></div>
+        <div class="submission-orbit submission-orbit-b"></div>
+        <div class="submission-corner submission-corner-a"></div>
+        <div class="submission-corner submission-corner-b"></div>
+        <div class="submission-stamp">SYSTEM<br>READY<br><span>✳</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <a href="#home" class="footer-brand">G<span>/</span>A <small>2099</small></a>
+    <div class="footer-credit">
+      <strong>CREATED BY NIVEDita THANAPATI</strong>
+      <span>AN EXPERIMENT IN IMMERSIVE DIGITAL DESIGN</span>
+    </div>
+    <a href="#home" class="back-top">BACK TO TOP ↑</a>
+    <div class="footer-bottom">
+      <span>© 2099 GLITCH ARCADE — CONCEPT EXPERIENCE</span>
+      <span>BUILT WITH CURIOSITY <b>✳</b> POWERED BY CODE</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
